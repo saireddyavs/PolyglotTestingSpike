@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  microservice-one:
+    container_name: microservice1
+    build:
+      context: "./MicroService1"
+    environment:
+      OTEL_EXPORTER: jaeger
+      OTEL_JAEGER_ENDPOINT: jaeger-tracing:14250
+      OTEL_JAEGER_SERVICE_NAME: java-service-one
+      SERVER_PORT: 8060
+    ports:
+      - "8060:8060"
+
+  microservice-two:
+    container_name: microservice2
+    build:
+      context: "./MicroService2"
+    environment:
+      OTEL_EXPORTER: jaeger
+      OTEL_JAEGER_ENDPOINT: jaeger-tracing:14250
+      OTEL_JAEGER_SERVICE_NAME: java-service-two
+      SERVER_PORT: 8061
+    ports:
+      - "8061:8061"
+
+  microservice-three:
+    container_name: microservice3
+    build:
+      context: "./MicroService3"
+    environment:
+      OTEL_EXPORTER: jaeger
+      OTEL_JAEGER_ENDPOINT: jaeger-tracing:14250
+      OTEL_JAEGER_SERVICE_NAME: java-service-three
+      SERVER_PORT: 8062
+    ports:
+      - "8062:8062"
+
+  microservice-four:
+    container_name: microservice4
+    build:
+      context: "./MicroService4"
+    environment:
+      OTEL_EXPORTER: jaeger
+      OTEL_JAEGER_ENDPOINT: jaeger-tracing:14250
+      OTEL_JAEGER_SERVICE_NAME: java-service-four
+      SERVER_PORT: 8063
+    ports:
+      - "8063:8063"
+
+  jaeger-tracing:
+    image: jaegertracing/all-in-one:1.9
+    container_name: jaeger-tracing
+    ports:
+      - "5775:5775/udp"
+      - "5778:5778"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "9411:9411"
+      - "14268:14268"
+      - "16686:16686"
